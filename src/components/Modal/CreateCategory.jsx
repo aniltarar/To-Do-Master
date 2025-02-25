@@ -5,14 +5,17 @@ import { IoMdClose } from 'react-icons/io'
 import { useUser } from '../../hooks/useUser'
 import { useDispatch } from 'react-redux'
 import { createCategory } from '../../redux/slices/categorySlice'
+import ModalContainer from '../Container/ModalContainer'
 
 const CreateCategory = ({ setCreateIsOpen }) => {
 
-    const modalRoot = document.getElementById('modal-root')
+  
     const closeModal = () => {
         setCreateIsOpen(false)
     }
+
     const [categoryColor, setCategoryColor] = useState('#000000') // Default color code
+
     const dispatch = useDispatch()
 
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -24,7 +27,7 @@ const CreateCategory = ({ setCreateIsOpen }) => {
             categoryName: data.categoryName,
             categoryDescription: data.categoryDescription,
             categoryColor: categoryColor,
-            tasks:[],
+            tasks: [],
         }
         dispatch(createCategory(categoryData))
 
@@ -36,16 +39,16 @@ const CreateCategory = ({ setCreateIsOpen }) => {
         setCategoryColor(e.target.value);
     }
 
-    return createPortal(
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-1/2 ">
+    return(
+        <ModalContainer>
+            <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-1/2 ">
                 <div className="header flex items-center justify-between border-b pb-2">
                     <h1 className='text-xl font-semibold'>Create a Category</h1>
                     <button
                         className=" top-3 right-3 text-2xl text-gray-600 hover:text-black cursor-pointer"
                         onClick={closeModal}
                     >
-                        <IoMdClose />
+                        <IoMdClose className='text-white hover:text-gray-500' />
                     </button>
                 </div>
 
@@ -94,12 +97,12 @@ const CreateCategory = ({ setCreateIsOpen }) => {
                         {errors.categoryColor && <span className='text-pink-500 font-semibold text-sm'>{errors.categoryColor.message}</span>}
                     </div>
 
-                    <button type='submit' className='outline-1 text-black bg-white rounded-md px-4 py-2 hover:bg-gray-500 hover:text-white hover:cursor-pointer transition-colors'>Create Category</button>
+                    <button type='submit' className='outline-1 text-black bg-white rounded-md px-4 py-2 hover:bg-[#1a1d23] hover:text-white hover:cursor-pointer transition-colors'>Create Category</button>
 
                 </form>
             </div>
-        </div>
-        , modalRoot)
+        </ModalContainer>
+    )
 }
 
 export default CreateCategory

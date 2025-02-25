@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  arrayRemove,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   query,
@@ -22,14 +24,12 @@ const initialState = {
 export const getCategories = createAsyncThunk(
   "category/getCategories",
   async (uid, { rejectWithValue }) => {
-    
     try {
       const categoriesRef = collection(db, "categories");
       const categoryQuery = query(categoriesRef, where("uid", "==", uid));
       const categoriesSnapshot = await getDocs(categoryQuery);
       const categories = categoriesSnapshot.docs.map((doc) => doc.data());
 
-  
       return categories;
     } catch (error) {
       console.log(error);
@@ -68,6 +68,61 @@ export const createCategory = createAsyncThunk(
   }
 );
 
+export const deleteCategory = createAsyncThunk(
+  "category/deleteCategory",
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      // Delete Category from "categories" collection
+      const categoryRef = doc(db, "categories", data.id);
+      await deleteDoc(categoryRef);
+
+      // Delete Category from "users" collection
+      const userRef = doc(db, "users", data.uid);
+      await updateDoc(userRef, {
+        categories: arrayRemove(data.id),
+      });
+
+      // Delete all tasks in the category
+      // const tasksRef = collection(db, "tasks");
+      // const tasksQuery = query(tasksRef, where("categoryId", "==", data.id));
+      // const taskIdList = await getDocs(tasksQuery);
+      // taskIdList.forEach(async (doc) => {
+      //   await deleteDoc(doc.ref);
+      // });
+
+      toast.success("Category deleted successfully");
+      dispatch(getCategories(data.uid));
+      return data.id;
+    } catch (error) {
+      console.log(rejectWithValue(error.message));
+      toast.error("An error occurred while deleting the category");
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateCategory = createAsyncThunk(
+  "category/updateCategory",
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      const categoryRef = doc(db, "categories", data.id);
+      await updateDoc(categoryRef, {
+        categoryName: data.categoryName,
+        categoryDescription: data.categoryDescription,
+        categoryColor: data.categoryColor,
+      });
+
+      toast.success("Category updated successfully");
+      dispatch(getCategories(data.uid));
+      return data;
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while updating the category");
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const categorySlice = createSlice({
   name: "category",
   initialState,
@@ -93,6 +148,16 @@ export const categorySlice = createSlice({
         state.status = "success";
       })
       .addCase(createCategory.rejected, (state, action) => {
+        state.status = "failed";
+        state.message = action.payload;
+      })
+      .addCase(deleteCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteCategory.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(deleteCategory.rejected, (state, action) => {
         state.status = "failed";
         state.message = action.payload;
       });

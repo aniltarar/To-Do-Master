@@ -4,16 +4,19 @@ import CreateCategory from '../../components/Modal/CreateCategory'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../../redux/slices/categorySlice'
 import { useUser } from '../../hooks/useUser'
+import CategoryBox from '../../components/Category/CategoryBox'
+
 
 const Categories = () => {
 
   const [createIsOpen, setCreateIsOpen] = useState(false)
+
   const dispatch = useDispatch()
   const user = useUser()
 
-  const {categories} = useSelector((state)=>state.category)
+  const { categories } = useSelector((state) => state.category)
 
-  console.log(categories);
+ 
 
 
   useEffect(() => {
@@ -30,7 +33,8 @@ const Categories = () => {
 
       }
 
-      <div className='flex flex-col w-full'>
+
+      <div className='flex flex-col  w-full gap-y-5'>
 
         <div className='flex items-center justify-between border-b pb-3'>
           <h1 className='text-3xl font-semibold'>Categories</h1>
@@ -39,7 +43,15 @@ const Categories = () => {
             <IoMdAdd />
             <span>Add Category</span>
           </button>
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 '>
+          {
+            categories.map((category) => (
+              <CategoryBox category={category} key={category.id} />
+            ))
+          }
 
+         
         </div>
 
       </div>
