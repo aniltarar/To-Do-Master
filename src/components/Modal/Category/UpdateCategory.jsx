@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import ModalContainer from '../Container/ModalContainer'
+import ModalContainer from '../../Container/ModalContainer'
 import { IoMdClose } from 'react-icons/io'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { updateCategory } from '../../redux/slices/categorySlice'
+import { updateCategory } from '../../../redux/slices/categorySlice'
+
+
 
 const UpdateCategory = ({ category, setEditIsOpen }) => {
 

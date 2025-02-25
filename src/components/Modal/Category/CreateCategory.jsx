@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { IoMdClose } from 'react-icons/io'
-import { useUser } from '../../hooks/useUser'
+import { useUser } from '../../../hooks/useUser'
 import { useDispatch } from 'react-redux'
-import { createCategory } from '../../redux/slices/categorySlice'
-import ModalContainer from '../Container/ModalContainer'
+import { createCategory } from '../../../redux/slices/categorySlice'
+import ModalContainer from "../../Container/ModalContainer"
 
 const CreateCategory = ({ setCreateIsOpen }) => {
 
-  
+
     const closeModal = () => {
         setCreateIsOpen(false)
     }
@@ -39,9 +39,9 @@ const CreateCategory = ({ setCreateIsOpen }) => {
         setCategoryColor(e.target.value);
     }
 
-    return(
+    return (
         <ModalContainer>
-            <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-1/2 ">
+            <div className="bg-[#262a33]  text-white p-6 rounded-lg shadow-lg w-full md:max-w-4xl  ">
                 <div className="header flex items-center justify-between border-b pb-2">
                     <h1 className='text-xl font-semibold'>Create a Category</h1>
                     <button

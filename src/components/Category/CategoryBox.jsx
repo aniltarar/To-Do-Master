@@ -1,6 +1,7 @@
 import { useState } from "react"
-import DeleteCategory from '../../components/Modal/DeleteCategory'
-import UpdateCategory from "../Modal/UpdateCategory"
+import DeleteCategory from "../Modal/Category/DeleteCategory"
+import UpdateCategory from "../Modal/Category/UpdateCategory"
+
 const CategoryBox = ({ category }) => {
 
 
@@ -29,7 +30,7 @@ const CategoryBox = ({ category }) => {
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-x-2 w-1/3">
-                        <button onClick={()=>setEditIsOpen(true)} className="bg-yellow-500  text-white w-full hover:bg-yellow-600 py-1  rounded-md hover:cursor-pointer">Edit</button>
+                        <button onClick={() => setEditIsOpen(true)} className="bg-yellow-500  text-white w-full hover:bg-yellow-600 py-1  rounded-md hover:cursor-pointer">Edit</button>
                         <button onClick={() => setDeleteIsOpen(true)} className="bg-red-500 text-white w-full hover:bg-red-600 py-1  rounded-md hover:cursor-pointer">Delete</button>
                     </div>
 

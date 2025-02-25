@@ -1,8 +1,8 @@
 import React from 'react'
-import ModalContainer from '../Container/ModalContainer'
+import ModalContainer from '../../Container/ModalContainer'
 import { IoMdClose } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
-import { deleteCategory } from '../../redux/slices/categorySlice';
+import { deleteCategory } from '../../../redux/slices/categorySlice';
 
 const DeleteCategory = ({ setIsDeletedOpen, category }) => {
 

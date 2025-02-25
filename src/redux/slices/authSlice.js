@@ -17,7 +17,7 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (data, { rejectWithValue }) => {
-    console.log("registerUser");
+
     try {
       const { displayName, email, password } = data;
       const userCredential = await createUserWithEmailAndPassword(

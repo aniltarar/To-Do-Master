@@ -1,22 +1,17 @@
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../redux/slices/authSlice'
 
 const Register = () => {
-
   const { register, watch, handleSubmit, formState: { errors } } = useForm()
   const dispatch = useDispatch()
   const { status, message } = useSelector(state => state.auth)
   const navigate = useNavigate()
 
-
-
   const onRegister = (data) => {
-    console.log("çalıştı");
     dispatch(registerUser(data))
-    console.log("bitti");
   }
 
   useEffect(() => {
@@ -25,33 +20,26 @@ const Register = () => {
         navigate('/')
       }, 2000)
     }
-
-  })
-
-
+  }, [status]) // status değiştiğinde çalışmasını sağladık
 
   return (
-
-    <div className='flex flex-col w-full items-center justify-center  '>
-
-      <div className='p-8 rounded-lg w-full md:w-1/2  lg:w-1/3 flex flex-col gap-y-4 ' >
-        <div className='flex flex-col items-center gap-y-3 '>
+    <div className='flex flex-col w-full items-center justify-center'>
+      <div className='p-8 rounded-lg w-full md:w-1/2 lg:w-1/3 flex flex-col gap-y-4'>
+        <div className='flex flex-col items-center gap-y-3'>
           <h1 className='text-2xl font-bold'>Hesap Oluştur</h1>
           <p className='text-sm text-gray-500'>Hesabınız yok mu? Hemen kayıt olun.</p>
         </div>
 
-
         <form className='flex flex-col gap-y-5 p-5 rounded-md outline' onSubmit={handleSubmit(onRegister)}>
-
           <div className='flex flex-col gap-y-2'>
             <label htmlFor="displayName">Adınız - Soyadınız</label>
-            <input type="text" id='displayName' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Anıl Tarar' {...register('displayName', {
+            <input type="text" id='displayName' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Adınız Soyadınız' {...register('displayName', {
               required: { value: true, message: 'Alan boş bırakılamaz.' },
               minLength: { value: 2, message: 'Adınız en az 2 karakter olmalıdır' },
               maxLength: { value: 30, message: 'Adınız en fazla 30 karakter olmalıdır' },
-              pattern: { value: /^[a-zA-Z\s]*$/, message: 'Adınız sadece harf ve boşluk içerebilir. Lütfen aykırı karakterleri kaldırınız.' }
+              
             })} />
-            {errors.fullName && <span className='text-pink-500 font-semibold text-sm'>{errors.fullName.message}</span>}
+            {errors.displayName && <span className='text-pink-500 font-semibold text-sm'>{errors.displayName.message}</span>}
           </div>
 
           <div className='flex flex-col gap-y-2'>
@@ -78,21 +66,19 @@ const Register = () => {
             <input type="password" id='passwordConfirm' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Şifrenizi tekrarlayınız'  {...register('passwordConfirm', {
               required: { value: true, message: 'Alan boş bırakılamaz.' },
               validate: value => value === watch('password') || 'Şifreler uyuşmuyor'
-
             })} />
             {errors.passwordConfirm && <span className='text-pink-500 font-semibold text-sm'>{errors.passwordConfirm.message}</span>}
           </div>
 
-
-            <button onClick={()=>console.log("tıkladı")}>Dene</button>
-          <button type='submit' className='outline-1 text-white rounded-md px-4 py-2 hover:bg-white hover:text-black hover:cursor-pointer transition-colors'>Kayıt Ol</button>
+          {/* ✅ type="submit" yaptık */}
+          <button type='submit' className='outline-1 text-white rounded-md px-4 py-2 hover:bg-white hover:text-black hover:cursor-pointer transition-colors'>
+            Kayıt Ol
+          </button>
 
           <Link to='/auth/login' className='text-center text-sm text-gray-500 hover:text-white hover:underline'>
             Hesabınız var mı? Giriş yapmak için tıklayın.
           </Link>
-
         </form>
-
       </div>
     </div>
   )
