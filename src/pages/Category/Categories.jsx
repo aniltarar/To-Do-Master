@@ -45,7 +45,7 @@ const Categories = () => {
           </button>
         </div>
         {
-          categories?.length === 0 && 
+          categories?.length === 0 &&
           <div className='flex flex-col gap-y-3 items-center justify-center h-64'>
             <h1 className='text-2xl font-semibold'>You don't have any Category.</h1>
             <button onClick={() => setCreateIsOpen(true)} className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
@@ -60,6 +60,7 @@ const Categories = () => {
               <CategoryBox category={category} key={category.id} />
             ))
           }
+
 
 
         </div>

@@ -76,7 +76,6 @@ const CreateCategory = ({ setCreateIsOpen }) => {
 
                     <div className='flex flex-col gap-y-2 '>
                         <label htmlFor="categoryColor" className='text-lg'>Category Color</label>
-
                         <div className="flex gap-x-2 items-center justify-center  ">
                             <input
                                 type="color"
@@ -95,6 +94,17 @@ const CreateCategory = ({ setCreateIsOpen }) => {
                             />
                         </div>
                         {errors.categoryColor && <span className='text-pink-500 font-semibold text-sm'>{errors.categoryColor.message}</span>}
+                    </div>
+                    <div className='flex items-center justify-around'>
+                        {['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#33FFF3'].map((color) => (
+                            <div
+                                key={color}
+                                className="w-10 h-8 rounded-full cursor-pointer border border-white"
+                                style={{ backgroundColor: color }}
+                                onClick={() => setCategoryColor(color)}
+                            />
+                        ))}
+
                     </div>
 
                     <button type='submit' className='outline-1 text-black bg-white rounded-md px-4 py-2 hover:bg-[#1a1d23] hover:text-white hover:cursor-pointer transition-colors'>Create Category</button>

@@ -38,7 +38,7 @@ const UpdateCategory = ({ category, setEditIsOpen }) => {
 
     return (
         <ModalContainer>
-            <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-1/4 ">
+            <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-full md:max-w-4xl  ">
                 <div className="header flex items-center justify-between border-b pb-2">
                     <h1 className='text-xl font-semibold'>Update Category - {category.categoryName}</h1>
                     <button
@@ -82,6 +82,17 @@ const UpdateCategory = ({ category, setEditIsOpen }) => {
                             value={categoryColor}
                             onChange={handleColorChange}
                         />
+                    </div>
+                    <div className='flex items-center justify-around'>
+                        {['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#33FFF3'].map((color) => (
+                            <div
+                                key={color}
+                                className="w-10 h-8 rounded-full cursor-pointer border border-white"
+                                style={{ backgroundColor: color }}
+                                onClick={() => setCategoryColor(color)}
+                            />
+                        ))}
+
                     </div>
 
                     <button type='submit' className='bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600'>Update Category</button>

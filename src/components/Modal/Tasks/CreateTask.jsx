@@ -22,6 +22,7 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
             category: {
                 id: data.category,
                 categoryName: categories.find((category) => category.id === data.category).categoryName,
+                categoryColor: categories.find((category) => category.id === data.category).categoryColor,
             },
             subTasks: subTasks.map((subTask, index) => ({
                 index,
@@ -29,7 +30,6 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                 status: "pending",
             })),
             createdAt: new Date(),
-            deadTime: data.deadTime,
             deadTime: new Date(data.deadTime),
             status: "pending",
             uid: user.uid,

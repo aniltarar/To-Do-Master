@@ -3,8 +3,11 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "../../config/firebaseConfig";
@@ -17,7 +20,7 @@ const initialState = {
 
 export const createTask = createAsyncThunk(
   "task/createTask",
-  async (data, { rejectWithValue }) => {
+  async (data, { rejectWithValue, dispatch }) => {
     try {
       // Add "tasks" collection
       const taskRef = doc(collection(db, "tasks"));
@@ -41,6 +44,7 @@ export const createTask = createAsyncThunk(
       });
 
       toast.success("Task created successfully");
+      dispatch(getTasks(data.uid));
       return newTaskData;
     } catch (error) {
       console.log(rejectWithValue(error.message));
@@ -50,11 +54,52 @@ export const createTask = createAsyncThunk(
   }
 );
 
+export const getTasks = createAsyncThunk(
+  "task/getTasks",
+  async (uid, { rejectWithValue }) => {
+    try {
+      const tasksRef = collection(db, "tasks");
+      const taskUserQuery = query(tasksRef, where("uid", "==", uid));
+      const tasksSnapshot = await getDocs(taskUserQuery);
+      const tasks = tasksSnapshot.docs.map((doc) => doc.data());
+
+      return tasks;
+    } catch (error) {
+      console.log(rejectWithValue(error.message));
+      toast.error("An error occurred while fetching tasks");
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const taskSlice = createSlice({
   name: "task",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createTask.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createTask.fulfilled, (state, action) => {
+        state.status = "idle";
+      })
+      .addCase(createTask.rejected, (state, action) => {
+        state.status = "idle";
+        state.message = action.payload;
+      })
+      .addCase(getTasks.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getTasks.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.tasks = action.payload;
+      })
+      .addCase(getTasks.rejected, (state, action) => {
+        state.status = "idle";
+        state.message = action.payload;
+      });
+  },
 });
 
 export default taskSlice.reducer;
