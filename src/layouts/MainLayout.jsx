@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar/Sidebar'
 
 const MainLayout = () => {
     return (
-        <div className='flex min-h-screen h-full bg-[#262a33] text-white'>
+        <div className='flex  min-h-screen h-full bg-[#262a33] text-white'>
             <Sidebar />
             <Toaster position='top-center' />
             <div className='flex-1 overflow-auto'>

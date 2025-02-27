@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     category: categoryReducer,
-    task : taskReducer
+    task: taskReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

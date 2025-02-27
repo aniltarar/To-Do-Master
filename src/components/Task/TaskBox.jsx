@@ -1,14 +1,20 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const TaskBox = ({task}) => {
+const TaskBox = ({ task }) => {
 
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate(`/tasks/${task.id}`)
+    }
 
 
     return (
-        <div className='flex flex-col bg-[#303236] p-5 rounded-lg shadow-lg border border-white gap-y-3'>
+        <div onClick={handleClick} className='flex flex-col bg-[#303236] p-5 rounded-lg shadow-lg border border-white gap-y-3 cursor-pointer'>
             <div className='flex items-center justify-between'>
                 <h1 className='text-xl font-semibold'>{task?.taskName}</h1>
-                <span style={{ borderColor: task.category.categoryColor }} className='px-2 py-0.5 rounded-md font-semibold border  '>{task?.category.categoryName}</span>
+                <span style={{ borderColor: task?.category.categoryColor }} className='px-2 py-0.5 rounded-md font-semibold border  '>{task?.category.categoryName}</span>
             </div>
             <p className='text-sm '>{task?.taskDescription}</p>
 

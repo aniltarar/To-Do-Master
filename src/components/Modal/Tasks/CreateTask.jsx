@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ModalContainer from "../../Container/ModalContainer";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
-import SubtaskBadge from "./SubtaskBadge";
+import SubtaskBadge from "../../Task/SubtaskBadge";
 import { useDispatch } from "react-redux";
 import { createTask } from "../../../redux/slices/taskSlice";
 

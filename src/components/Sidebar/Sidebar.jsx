@@ -13,7 +13,7 @@ const Sidebar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useUser();
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = () => {
     setTimeout(() => {
@@ -31,7 +31,7 @@ const Sidebar = () => {
         <Link className={`${isOpen ? "block" : "hidden"}`} to='/'>
           <h1 className='text-2xl font-bold text-center w-full bg-gradient-to-r from-white via-red-500 to-pink-500 text-transparent bg-clip-text'>To-Do Master</h1>
         </Link>
-        <button className={`w-full flex items-center  gap-2 p-3 rounded-md ${isOpen ? "justify-end" : "justify-center"} hidden lg:flex `}>
+        <button className={`w-full flex items-center  gap-2 p-3 rounded-md ${isOpen ? "justify-end" : "justify-center"}  `}>
           {isOpen ? <MdClose onClick={() => setIsOpen(!isOpen)} className='text-white text-2xl cursor-pointer' /> : <MdMenu onClick={() => setIsOpen(!isOpen)} className='text-white text-2xl cursor-pointer' />}
         </button>
       </div>

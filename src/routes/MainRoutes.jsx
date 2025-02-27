@@ -3,6 +3,7 @@ import { roleLoader } from "../loader/roleLoader";
 import Categories from "../pages/Category/Categories";
 import HomeDash from "../pages/Home/HomeDash";
 import NotFound from "../pages/NotFound/NotFound";
+import TaskDetail from "../pages/Task/TaskDetail";
 import Tasks from "../pages/Task/Tasks";
 
 export const MainRoutes = {
@@ -20,6 +21,9 @@ export const MainRoutes = {
         },
         {
             path: "/tasks", element: <Tasks />, loader: () => roleLoader(["user"]),
+        },
+        {
+            path: "/tasks/:id", element: <TaskDetail />, loader: () => roleLoader(["user"]),
         },
         {
             path: "*", element: <NotFound />
