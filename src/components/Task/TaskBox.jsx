@@ -11,7 +11,7 @@ const TaskBox = ({ task }) => {
 
 
     return (
-        <div onClick={handleClick} className='flex flex-col bg-[#303236] p-5 rounded-lg shadow-lg border border-white gap-y-3 cursor-pointer'>
+        <div onClick={handleClick} className='flex flex-col bg-gray-900 hover:bg-gray-700 p-5 rounded-lg shadow-lg border border-white gap-y-3 cursor-pointer '>
             <div className='flex items-center justify-between'>
                 <h1 className='text-xl font-semibold'>{task?.taskName}</h1>
                 <span style={{ borderColor: task?.category.categoryColor }} className='px-2 py-0.5 rounded-md font-semibold border  '>{task?.category.categoryName}</span>

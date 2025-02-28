@@ -76,19 +76,23 @@ export const deleteCategory = createAsyncThunk(
       const categoryRef = doc(db, "categories", data.id);
       await deleteDoc(categoryRef);
 
-      // Delete Category from "users" collection
+  
+
+      // Delete all tasks in the category & user's tasks array
+      const tasksRef = collection(db, "tasks");
+      const tasksQuery = query(tasksRef, where("category.id", "==", data.id));
+      const tasksSnapshot = await getDocs(tasksQuery);
+      const waitDeleteTasks = tasksSnapshot.docs.map((doc) => doc.data().id);
+      tasksSnapshot.docs.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+
+         
       const userRef = doc(db, "users", data.uid);
       await updateDoc(userRef, {
         categories: arrayRemove(data.id),
+        tasks: arrayRemove(...waitDeleteTasks),
       });
-
-      // Delete all tasks in the category
-      // const tasksRef = collection(db, "tasks");
-      // const tasksQuery = query(tasksRef, where("categoryId", "==", data.id));
-      // const taskIdList = await getDocs(tasksQuery);
-      // taskIdList.forEach(async (doc) => {
-      //   await deleteDoc(doc.ref);
-      // });
 
       toast.success("Category deleted successfully");
       dispatch(getCategories(data.uid));
@@ -173,4 +177,3 @@ export const categorySlice = createSlice({
 
 export const { resetCategories, resetCurrentCategory } = categorySlice.actions;
 export default categorySlice.reducer;
-

@@ -44,7 +44,7 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
 
     return (
         <ModalContainer>
-            <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+            <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-full md:max-w-4xl">
                 <div className="header flex items-center justify-between border-b pb-2">
                     <h1 className="text-xl font-semibold">Create a Task</h1>
                     <button
@@ -107,20 +107,41 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                     {/* Sub Tasks */}
                     <div className="flex flex-col gap-y-2 md:col-span-2">
                         <label className="text-lg" htmlFor="subTasks">Sub Tasks</label>
-                        <input
-                            type="text"
-                            id="subTasks"
-                            className="rounded-md outline px-2 py-2.5 text-md"
-                            placeholder="Sub Task Name"
-                            onKeyDown={(e) => {
-                                if (e.target.value.length > 0 && e.key === "Enter") {
-                                    e.preventDefault();
-                                    setSubTasks([...subTasks, e.target.value]);
-                                    e.target.value = "";
-                                }
-                            }}
-                        />
+                        <div className="flex items-center justify-between gap-x-2">
+
+
+                            <input
+                                type="text"
+                                id="subTasks"
+                                className="rounded-md outline px-2 py-2.5 text-md w-full"
+                                placeholder="Sub Task Name"
+                                onKeyDown={(e) => {
+                                    if (e.target.value.length > 0 && e.key === "Enter") {
+                                        e.preventDefault();
+                                        setSubTasks([...subTasks, e.target.value]);
+                                        e.target.value = "";
+                                    }
+                                }}
+                            />
+                            <button
+                            type="button"
+                                onClick = {()=>{
+                                    if (document.getElementById('subTasks').value.length > 0){
+                                        setSubTasks([...subTasks, document.getElementById('subTasks').value]);
+                                        document.getElementById('subTasks').value = "";
+                                    }
+                                }}
+                             className="bg-white cursor-pointer rounded-md text-black px-2 py-2.5 w-1/5 hover:bg-black hover:text-white outline">
+                                Add
+                            </button>
+
+
+
+                        </div>
                         {subTasks.length === 0 && <span className="text-gray-400 text-xs">You should have at least 1 subtask.</span>}
+
+
+
                     </div>
 
                     {/* SubTask Badges */}
@@ -150,7 +171,7 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                     <div className="col-span-2 flex justify-end">
                         <button
                             type="submit"
-                            className="outline w-full text-black bg-white rounded-md px-4 py-2 hover:bg-[#1a1d23] hover:text-white transition-colors"
+                            className="outline cursor-pointer w-full text-black bg-white rounded-md px-4 py-2 hover:bg-[#1a1d23] hover:text-white transition-colors"
                         >
                             Create Task
                         </button>

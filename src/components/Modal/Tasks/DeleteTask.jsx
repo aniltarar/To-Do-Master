@@ -21,10 +21,9 @@ const DeleteTask = ({ task, setIsDeleteOpen }) => {
         }
         dispatch(deleteTask(data))
         setIsDeleteOpen(false)
+        navigate('/tasks')
         
-        setInterval(()=>{
-            navigate('/tasks')
-        }, 1000)
+       
     }
 
     //  id, uid ile silmece

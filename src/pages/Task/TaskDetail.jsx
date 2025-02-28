@@ -65,16 +65,16 @@ const TaskDetail = () => {
             {/* Header */}
             <div className='flex items-center justify-between border-b pb-3'>
                 <button
-                    className='flex items-center gap-x-3 text-xl font-semibold hover:bg-gray-700 px-4 py-2 rounded-lg transition-all'
+                    className='flex items-center gap-x-3 text-xl font-semibold hover:bg-gray-700 hover:cursor-pointer px-4 py-2 rounded-lg transition-all'
                     onClick={() => navigate(-1)}>
                     <IoMdArrowBack size={24} />
                     <span>Back to Tasks</span>
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit(handleEditSubmit)} className='flex gap-6 '>
+            <form onSubmit={handleSubmit(handleEditSubmit)} className='flex gap-6  md:flex-row flex-col w-full '>
                 {/* Task Details */}
-                <div className='flex flex-col gap-y-6 bg-[#303236] p-6 rounded-lg w-2/3 shadow-lg border'>
+                <div className='flex flex-col gap-y-6 bg-gray-900 p-6 rounded-lg  shadow-lg border w-full md:w-2/3 '>
                     {/* Task Header */}
                     <div className='flex justify-between items-start'>
                         <div className='flex flex-col gap-y-3'>
@@ -144,7 +144,7 @@ const TaskDetail = () => {
                     </div>
                 </div>
                 {/* Task Summary */}
-                <div className='w-1/3 bg-[#303236] p-6 rounded-lg shadow-lg flex flex-col gap-y-4 border'>
+                <div className='w-full md:w-1/3 bg-gray-900 p-6 rounded-lg shadow-lg flex flex-col gap-y-4 border'>
                     <h2 className='text-xl font-semibold'>Task Summary</h2>
                     <div className='flex justify-between text-sm'>
                         <span>Subtask Count: {subTasks?.length}</span>
@@ -162,12 +162,13 @@ const TaskDetail = () => {
             </form>
 
             {/* Subtasks */}
-            <div className='flex flex-col gap-y-6 bg-[#303236] p-6 rounded-lg border'>
+            <div className='flex flex-col gap-y-6 bg-gray-900 p-6 rounded-lg border '>
                 <h2 className='text-2xl font-semibold'>Subtasks</h2>
                 <hr />
-                <div className='grid grid-cols-3 gap-4'>
+                <div className='flex flex-col md:flex-row items-center gap-2  '>
+
                     <input type="text" placeholder='Write any subtask and press "enter" for add subtask.'
-                        className='p-2 outline col-span-3 rounded-md'
+                        className='p-2 outline w-full rounded-md'
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 setSubtaskList([...subtaskList, { title: e.target.value, status: 'pending', index: subtaskList.length }])
@@ -175,14 +176,25 @@ const TaskDetail = () => {
                             }
                         }}
                     />
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setSubtaskList([...subtaskList, { title: 'New Subtask', status: 'pending', index: subtaskList.length }])
+                        }}
+                        className="bg-white cursor-pointer rounded-md text-black px-2 py-2.5 w-full md:w-1/5 hover:bg-black hover:text-white outline">
+                        Add
+                    </button>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+
                     {subtaskList?.map((subTask, index) => (
                         <SubtaskDetailBox key={index} subTask={subTask} setSubtaskList={setSubtaskList} />
                     ))}
                 </div>
 
                 <div className='flex items-center justify-end gap-x-5'>
-                    <button onClick={()=>setIsDeleteOpen(true)} className='flex items-center self-end gap-x-2 px-4 py-2 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600  transition-all hover:scale-110'>
-                    <IoMdTrash size={24} className=' transition-all' />
+                    <button onClick={() => setIsDeleteOpen(true)} className='flex items-center self-end gap-x-2 px-4 py-2 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600  transition-all hover:scale-110'>
+                        <IoMdTrash size={24} className=' transition-all' />
                         Delete Task
                     </button>
 

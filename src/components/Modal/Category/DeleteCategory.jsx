@@ -18,10 +18,12 @@ const DeleteCategory = ({ setIsDeletedOpen, category }) => {
         closeModal()
     }
 
+
+
     return (
         <>
             <ModalContainer>
-                <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-1/4 ">
+                <div className="bg-[#262a33] text-white p-6 rounded-lg shadow-lg w-full md:max-w-4xl  ">
                     <div className="header flex items-center justify-between border-b pb-2">
                         <h1 className='text-xl font-semibold'>Delete Category - {category.categoryName}</h1>
                         <button
