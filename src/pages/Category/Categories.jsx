@@ -39,9 +39,10 @@ const Categories = () => {
         <div className='flex items-center justify-between border-b pb-3'>
           <h1 className='text-3xl font-semibold'>Categories</h1>
 
-          <button onClick={() => setCreateIsOpen(true)} className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
+          <button onClick={() => setCreateIsOpen(true)} 
+          className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
             <IoMdAdd />
-            <span>Add Category</span>
+            <span>Add </span>
           </button>
         </div>
         {

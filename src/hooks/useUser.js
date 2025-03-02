@@ -1,5 +1,10 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "../redux/slices/categorySlice";
+import { getTasks } from "../redux/slices/taskSlice";
 
 export const useUser = () => {
-  return useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+
+  return user;
 };

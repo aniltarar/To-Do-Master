@@ -34,6 +34,7 @@ const Tasks = () => {
     }
   })
 
+ 
   const sortedTasks = filteredTasks.sort((a, b) => {
     if (sortType === 'newest') {
       return a.deadTime > b.deadTime ? -1 : 1
@@ -48,19 +49,22 @@ const Tasks = () => {
     dispatch(getCategories(user.uid))
   }, [])
 
+  
+
   return (
     <>
+      {
+        createIsOpen
+        && <CreateTask setCreateIsOpen={setCreateIsOpen} categories={categories} user={user} />
+      }
       <div className='flex flex-col w-full gap-y-5'>
-        {
-          createIsOpen
-          && <CreateTask setCreateIsOpen={setCreateIsOpen} categories={categories} user={user} />
-        }
+
 
         <div className='flex items-center justify-between border-b pb-3'>
           <h1 className='text-3xl font-semibold'>Tasks</h1>
           <button onClick={() => setCreateIsOpen(true)} className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
             <IoMdAdd />
-            <span>Add Tasks</span>
+            <span>Add</span>
           </button>
         </div>
 

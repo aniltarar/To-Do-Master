@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import SubtaskBadge from "../../Task/SubtaskBadge";
 import { useDispatch } from "react-redux";
 import { createTask } from "../../../redux/slices/taskSlice";
+import toast from "react-hot-toast";
 
 const CreateTask = ({ categories, setCreateIsOpen, user }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -16,6 +17,10 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
     };
 
     const createTaskSubmit = (data) => {
+        if(subTasks.length === 0) {
+            toast.error("You should have at least 1 subtask.");
+            return;
+        }
         const taskData = {
             taskName: data.taskName,
             taskDescription: data.taskDescription,
@@ -124,21 +129,18 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                                 }}
                             />
                             <button
-                            type="button"
-                                onClick = {()=>{
-                                    if (document.getElementById('subTasks').value.length > 0){
+                                type="button"
+                                onClick={() => {
+                                    if (document.getElementById('subTasks').value.length > 0) {
                                         setSubTasks([...subTasks, document.getElementById('subTasks').value]);
                                         document.getElementById('subTasks').value = "";
                                     }
                                 }}
-                             className="bg-white cursor-pointer rounded-md text-black px-2 py-2.5 w-1/5 hover:bg-black hover:text-white outline">
+                                className="bg-white cursor-pointer rounded-md text-black px-2 py-2.5 w-1/5 hover:bg-black hover:text-white outline">
                                 Add
                             </button>
-
-
-
                         </div>
-                        {subTasks.length === 0 && <span className="text-gray-400 text-xs">You should have at least 1 subtask.</span>}
+                        {subTasks.length === 0 && <span className="text-gray-500 text-xs">You should have at least 1 subtask.</span>}
 
 
 

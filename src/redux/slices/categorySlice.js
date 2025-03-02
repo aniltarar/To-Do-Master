@@ -76,8 +76,6 @@ export const deleteCategory = createAsyncThunk(
       const categoryRef = doc(db, "categories", data.id);
       await deleteDoc(categoryRef);
 
-  
-
       // Delete all tasks in the category & user's tasks array
       const tasksRef = collection(db, "tasks");
       const tasksQuery = query(tasksRef, where("category.id", "==", data.id));
@@ -87,7 +85,6 @@ export const deleteCategory = createAsyncThunk(
         await deleteDoc(doc.ref);
       });
 
-         
       const userRef = doc(db, "users", data.uid);
       await updateDoc(userRef, {
         categories: arrayRemove(data.id),
@@ -114,6 +111,20 @@ export const updateCategory = createAsyncThunk(
         categoryName: data.categoryName,
         categoryDescription: data.categoryDescription,
         categoryColor: data.categoryColor,
+      });
+
+      // tasks > category > categoryChanges
+      const tasksRef = collection(db, "tasks");
+      const tasksQuery = query(tasksRef, where("category.id", "==", data.id));
+      const tasksSnapshot = await getDocs(tasksQuery);
+      tasksSnapshot.docs.forEach(async (doc) => {
+        await updateDoc(doc.ref, {
+          category: {
+            id: data.id,
+            categoryName: data.categoryName,
+            categoryColor: data.categoryColor,
+          },
+        });
       });
 
       toast.success("Category updated successfully");

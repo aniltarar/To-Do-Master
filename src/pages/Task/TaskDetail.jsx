@@ -9,6 +9,7 @@ import SubtaskDetailBox from '../../components/Task/SubtaskDetailBox';
 import { FaSave } from 'react-icons/fa';
 import { useUser } from '../../hooks/useUser';
 import DeleteTask from '../../components/Modal/Tasks/DeleteTask';
+import toast from 'react-hot-toast';
 
 
 const TaskDetail = () => {
@@ -23,10 +24,14 @@ const TaskDetail = () => {
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
+    
+
 
     const [subtaskList, setSubtaskList] = useState([]);
 
+
     const handleEditSubmit = (data) => {
+        
         const updatedTask = {
             id,
             uid: user.uid,
@@ -37,6 +42,10 @@ const TaskDetail = () => {
     }
 
     const handleSaveChanges = () => {
+        if(subtaskList.length === 0) {
+            toast.error("You should have at least 1 subtask.");
+            return;
+        }
         const updatedTask = {
             id,
             uid: user.uid,
@@ -162,13 +171,13 @@ const TaskDetail = () => {
             </form>
 
             {/* Subtasks */}
-            <div className='flex flex-col gap-y-6 bg-gray-900 p-6 rounded-lg border '>
+            <div className={`flex flex-col gap-y-6 bg-gray-900 p-6 rounded-lg border  ${subtaskList.length==0 ? "border-2 border-red-500 ": "border"} ` }>
                 <h2 className='text-2xl font-semibold'>Subtasks</h2>
                 <hr />
                 <div className='flex flex-col md:flex-row items-center gap-2  '>
 
                     <input type="text" placeholder='Write any subtask and press "enter" for add subtask.'
-                        className='p-2 outline w-full rounded-md'
+                        className={`p-2 outline w-full rounded-md  ${subtaskList.length==0 ? "border-2 border-red-500 outline-0 animate-pulse": "border"} `}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 setSubtaskList([...subtaskList, { title: e.target.value, status: 'pending', index: subtaskList.length }])
@@ -176,6 +185,7 @@ const TaskDetail = () => {
                             }
                         }}
                     />
+
                     <button
                         type="button"
                         onClick={() => {
