@@ -60,9 +60,9 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                     </button>
                 </div>
 
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3" onSubmit={handleSubmit(createTaskSubmit)}>
+                <form className="flex flex-col gap-4 p-3" onSubmit={handleSubmit(createTaskSubmit)}>
                     {/* Task Name */}
-                    <div className="flex flex-col gap-y-2">
+                    <div className="flex flex-col gap-y-2 ">
                         <label className="text-lg" htmlFor="taskName">Task Name</label>
                         <input
                             type="text"

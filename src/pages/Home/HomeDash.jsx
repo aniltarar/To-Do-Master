@@ -4,6 +4,7 @@ import { getTasks } from '../../redux/slices/taskSlice';
 import { getCategories } from '../../redux/slices/categorySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { BarChart, Bar, PieChart, Pie, Tooltip, ResponsiveContainer, Cell, XAxis, YAxis, CartesianGrid, Legend, LabelList } from 'recharts';
+import { Link } from 'react-router-dom';
 
 const HomeDash = () => {
   const user = useUser();
@@ -39,7 +40,19 @@ const HomeDash = () => {
     };
   });
 
-  const COLORS = categories?.map((category) => category.categoryColor);
+  if (categories.length === 0 || tasks.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-full gap-y-5">
+        <h1 className="text-3xl font-semibold">Hey {user.displayName}, Welcome to your Dashboard!</h1>
+        <p className="text-lg text-gray-400">You don't have any tasks or categories yet. You can create them from the tasks page. You should create a category first.</p>
+        <span className='flex items-center gap-2 '>
+          <Link to='/categories' className='text-white bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600'>Go to Categories</Link>
+          <Link to='/tasks' className='text-white bg-indigo-500 px-4 py-2 rounded-lg hover:bg-indigo-600'>Go to Tasks</Link>
+        </span>
+      </div>
+    )
+  }
+
 
   useEffect(() => {
     dispatch(getTasks(user.uid));
@@ -48,6 +61,7 @@ const HomeDash = () => {
 
   return (
     <div className="flex flex-col w-full gap-y-5">
+
       <div className='flex flex-col gap-y-5 border-b pb-3'>
         <h1 className="text-3xl font-semibold">Dashboard</h1>
       </div>

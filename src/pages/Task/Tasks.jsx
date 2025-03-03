@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../../redux/slices/categorySlice'
 import { getTasks } from '../../redux/slices/taskSlice'
 import TaskBox from '../../components/Task/TaskBox'
+import toast from 'react-hot-toast'
 
 const Tasks = () => {
 
@@ -34,7 +35,7 @@ const Tasks = () => {
     }
   })
 
- 
+
   const sortedTasks = filteredTasks.sort((a, b) => {
     if (sortType === 'newest') {
       return a.deadTime > b.deadTime ? -1 : 1
@@ -43,33 +44,40 @@ const Tasks = () => {
     }
   })
 
+  const handleAddTask = () => {
+    console.log("handle dişarda");
+    if (categories.length > 0) {
+      setCreateIsOpen(true)
+    } else {
+      toast.error("You should have at least 1 category to create a task.")
+    }
+  }
+
 
   useEffect(() => {
     dispatch(getTasks(user.uid))
     dispatch(getCategories(user.uid))
   }, [])
 
-  
+
 
   return (
     <>
-      {
-        createIsOpen
-        && <CreateTask setCreateIsOpen={setCreateIsOpen} categories={categories} user={user} />
-      }
+    {
+      createIsOpen && <CreateTask categories={categories} setCreateIsOpen={setCreateIsOpen} user={user} />
+    }
+     
       <div className='flex flex-col w-full gap-y-5'>
-
-
         <div className='flex items-center justify-between border-b pb-3'>
           <h1 className='text-3xl font-semibold'>Tasks</h1>
-          <button onClick={() => setCreateIsOpen(true)} className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
+          <button onClick={handleAddTask} className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
             <IoMdAdd />
             <span>Add</span>
           </button>
         </div>
 
         {/* Select and Status Section */}
-        <div className='flex flex-col items-center justify-center gap-5 md:flex-row md:justify-between'>
+        <div className='flex flex-col items-center justify-center gap-5 md:flex-row md:justify-between '>
 
           {/* Status */}
           <div className='flex p-1 rounded-md bg-[#3f4043] gap-x-1 '>
@@ -105,6 +113,19 @@ const Tasks = () => {
           </div>
 
         </div>
+
+        {
+          
+                    sortedTasks?.length === 0 &&
+                    <div className='flex flex-col gap-y-3 items-center justify-center h-64'>
+                      <h1 className='text-2xl font-semibold'>You don't have any Task.</h1>
+                      <button onClick={handleAddTask} className='flex items-center justify-center gap-x-3 px-3 py-2 rounded-md bg-white text-black text-xl hover:bg-neutral-200 cursor-pointer'>
+                        <IoMdAdd />
+                        <span>Add Task</span>
+                      </button>
+                    </div>
+                  
+        }
 
 
         {/* Tasks */}
