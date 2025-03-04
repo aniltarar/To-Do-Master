@@ -52,9 +52,9 @@ const UpdateCategory = ({ category, setEditIsOpen }) => {
                 <form className='flex flex-col gap-y-5 p-3 ' onSubmit={handleSubmit(handleEditSubmit)}>
                     <div className='flex flex-col gap-y-2'>
                         <label className='text-lg' htmlFor="categoryName">Category Name</label>
-                        <input type="text" id='categoryName' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Category Name max 20 ch.' {...register('categoryName', {
+                        <input type="text" id='categoryName' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Category Name max 50 ch.' {...register('categoryName', {
                             required: { value: true, message: 'Field cannot be empty.' },
-                            maxLength: { value: 20, message: 'Max 20 characters allowed.' }
+                            maxLength: { value: 50, message: 'Max 50 characters allowed.' }
                         })} defaultValue={category.categoryName} />
                     </div>
 

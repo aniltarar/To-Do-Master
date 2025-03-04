@@ -14,7 +14,7 @@ const Categories = () => {
   const dispatch = useDispatch()
   const user = useUser()
 
-  const { categories } = useSelector((state) => state.category)
+  const { categories,status } = useSelector((state) => state.category)
 
 
 
@@ -22,6 +22,15 @@ const Categories = () => {
   useEffect(() => {
     dispatch(getCategories(user.uid))
   }, [])
+  
+  if(status === 'loading') {
+    return (
+      <div className="flex items-center justify-center h-screen w-full gap-y-5">
+        <h1 className="text-3xl font-semibold">Loading...</h1>
+      </div>
+    )
+  }
+
 
 
 

@@ -24,14 +24,14 @@ const TaskDetail = () => {
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-    
+
 
 
     const [subtaskList, setSubtaskList] = useState([]);
 
 
     const handleEditSubmit = (data) => {
-        
+
         const updatedTask = {
             id,
             uid: user.uid,
@@ -42,7 +42,7 @@ const TaskDetail = () => {
     }
 
     const handleSaveChanges = () => {
-        if(subtaskList.length === 0) {
+        if (subtaskList.length === 0) {
             toast.error("You should have at least 1 subtask.");
             return;
         }
@@ -89,7 +89,10 @@ const TaskDetail = () => {
                         <div className='flex flex-col gap-y-3'>
                             {isEditOpen ? (
                                 <input
-                                    {...register('taskName', { required: true })}
+                                    {...register("taskName", {
+                                        required: { value: true, message: "Field cannot be empty." },
+                                        maxLength: { value: 50, message: "Max 50 characters allowed." },
+                                    })}
                                     defaultValue={taskName}
                                     className='bg-gray-70 p-1 text-2xl font-semibold rounded-md w-full outline'
                                 />
@@ -124,9 +127,9 @@ const TaskDetail = () => {
                         <h2 className='text-lg font-semibold'>Description</h2>
                         {isEditOpen ? (
                             <textarea
-                                {...register('taskDescription', { required: { value: true, message: 'Task Description is required' }, maxLength: { value: 50, message: 'Task Description must be less than 50 characters' } })}
+                                {...register('taskDescription', { required: { value: true, message: 'Task Description is required' }, maxLength: { value: 100, message: 'Task Description must be less than 100 characters' } })}
                                 defaultValue={taskDescription}
-                                placeholder='Task Description max 50 characters'
+                                placeholder='Task Description max 100 characters'
                                 className='bg-transparent text-lg rounded-md p-2 w-full max-h-16 outline resize-none'
                             ></textarea>
 
@@ -171,13 +174,13 @@ const TaskDetail = () => {
             </form>
 
             {/* Subtasks */}
-            <div className={`flex flex-col gap-y-6 bg-gray-900 p-6 rounded-lg border  ${subtaskList.length==0 ? "border-2 border-red-500 ": "border"} ` }>
+            <div className={`flex flex-col gap-y-6 bg-gray-900 p-6 rounded-lg border  ${subtaskList.length == 0 ? "border-2 border-red-500 " : "border"} `}>
                 <h2 className='text-2xl font-semibold'>Subtasks</h2>
                 <hr />
                 <div className='flex flex-col md:flex-row items-center gap-2  '>
 
                     <input type="text" placeholder='Write any subtask and press "enter" for add subtask.'
-                        className={`p-2 outline w-full rounded-md  ${subtaskList.length==0 ? "border-2 border-red-500 outline-0 animate-pulse": "border"} `}
+                        className={`p-2 outline w-full rounded-md  ${subtaskList.length == 0 ? "border-2 border-red-500 outline-0 animate-pulse" : "border"} `}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 setSubtaskList([...subtaskList, { title: e.target.value, status: 'pending', index: subtaskList.length }])

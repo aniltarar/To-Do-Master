@@ -68,10 +68,10 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                             type="text"
                             id="taskName"
                             className="rounded-md outline px-2 py-2.5 text-md"
-                            placeholder="Task Name max 20 ch."
+                            placeholder="Task Name max 50 ch."
                             {...register("taskName", {
                                 required: { value: true, message: "Field cannot be empty." },
-                                maxLength: { value: 20, message: "Max 20 characters allowed." },
+                                maxLength: { value: 50, message: "Max 50 characters allowed." },
                             })}
                         />
                         {errors.taskName && <span className="text-red-500 text-sm">{errors.taskName.message}</span>}
@@ -103,7 +103,7 @@ const CreateTask = ({ categories, setCreateIsOpen, user }) => {
                             placeholder="Task Description max 100 ch."
                             {...register("taskDescription", {
                                 required: { value: true, message: "Field cannot be empty." },
-                                maxLength: { value: 50, message: "Max 50 characters allowed." },
+                                maxLength: { value: 100, message: "Max 100 characters allowed." },
                             })}
                         />
                         {errors.taskDescription && <span className="text-red-500 text-sm">{errors.taskDescription.message}</span>}

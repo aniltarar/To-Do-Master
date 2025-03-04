@@ -19,7 +19,7 @@ const Tasks = () => {
   const [sortType, setSortType] = useState('newest')
 
   const { categories } = useSelector((state) => state.category)
-  const { tasks } = useSelector((state) => state.task)
+  const { tasks ,status} = useSelector((state) => state.task)
 
 
   const filteredTasks = tasks.filter((task) => {
@@ -58,6 +58,15 @@ const Tasks = () => {
     dispatch(getTasks(user.uid))
     dispatch(getCategories(user.uid))
   }, [])
+  
+  if(status === 'loading') {
+    return (
+      <div className="flex items-center justify-center h-screen w-full gap-y-5">
+        <h1 className="text-3xl font-semibold">Loading...</h1>
+      </div>
+    )
+  }
+
 
 
 

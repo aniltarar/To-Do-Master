@@ -56,10 +56,10 @@ const CreateCategory = ({ setCreateIsOpen }) => {
 
                     <div className='flex flex-col gap-y-2'>
                         <label className='text-lg' htmlFor="categoryName">Category Name</label>
-                        <input type="text" id='categoryName' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Category Name max 20 ch.' {...register('categoryName', {
+                        <input type="text" id='categoryName' className='rounded-md outline-1 px-2 py-2.5 text-md' placeholder='Category Name max 50 ch.' {...register('categoryName', {
                             required: { value: true, message: 'Field cannot be empty.' },
                             minLength: { value: 2, message: 'Category name must be at least 2 characters' },
-                            maxLength: { value: 20, message: 'Category name must be at most 20 characters' }
+                            maxLength: { value: 50, message: 'Category name must be at most 50 characters' }
                         })} />
                         {errors.categoryName && <span className='text-pink-500 font-semibold text-sm'>{errors.categoryName.message}</span>}
                     </div>
@@ -69,7 +69,7 @@ const CreateCategory = ({ setCreateIsOpen }) => {
                         <textarea id='categoryDescription' className='rounded-md outline-1 px-2 py-2.5 text-md max-h-32 min-h-20' placeholder='Category Description max 50 ch.' {...register('categoryDescription', {
                             required: { value: true, message: 'Field cannot be empty.' },
                             minLength: { value: 2, message: 'Category description must be at least 2 characters' },
-                            maxLength: { value: 50, message: 'Category description must be at most 50 characters' }
+                            maxLength: { value: 100, message: 'Category description must be at most 100 characters' }
                         })} />
                         {errors.categoryDescription && <span className='text-pink-500 font-semibold text-sm'>{errors.categoryDescription.message}</span>}
                     </div>

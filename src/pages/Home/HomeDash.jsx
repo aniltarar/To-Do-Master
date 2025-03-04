@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { useUser } from '../../hooks/useUser';
 import { getTasks } from '../../redux/slices/taskSlice';
 import { getCategories } from '../../redux/slices/categorySlice';
@@ -7,10 +7,13 @@ import { BarChart, Bar, PieChart, Pie, Tooltip, ResponsiveContainer, Cell, XAxis
 import { Link } from 'react-router-dom';
 
 const HomeDash = () => {
+
   const user = useUser();
   const dispatch = useDispatch();
-  const { tasks } = useSelector((state) => state.task);
+  const { tasks, status } = useSelector((state) => state.task);
   const { categories } = useSelector((state) => state.category);
+
+
 
   // Kategorilere göre her birinin göreve sahip olma sayısı
   const categoryData = categories?.map((category) => {
@@ -40,7 +43,20 @@ const HomeDash = () => {
     };
   });
 
-  if (categories.length === 0 || tasks.length === 0) {
+  if (categories?.length === 0 || tasks?.length === 0) {
+    useEffect(() => {
+      dispatch(getTasks(user.uid));
+      dispatch(getCategories(user.uid));
+    }, [user]);
+
+    if(status === 'loading') {
+      return (
+        <div className="flex items-center justify-center h-screen w-full gap-y-5">
+          <h1 className="text-3xl font-semibold">Loading...</h1>
+        </div>
+      )
+    }
+
     return (
       <div className="flex flex-col items-center justify-center h-screen w-full gap-y-5">
         <h1 className="text-3xl font-semibold">Hey {user.displayName}, Welcome to your Dashboard!</h1>
@@ -54,10 +70,13 @@ const HomeDash = () => {
   }
 
 
+
   useEffect(() => {
     dispatch(getTasks(user.uid));
     dispatch(getCategories(user.uid));
   }, [user]);
+
+
 
   return (
     <div className="flex flex-col w-full gap-y-5">
